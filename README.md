@@ -31,7 +31,7 @@ WALLET_PRIVATE_KEY=YOUR_PRIVATE_KEY
 Clone the repository locally and install the dependencies:
 
 ```bash
-git clone https://github.com/your-username/raydium-sdk-swap-example.git
+git clone https://github.com/soos3d/raydium-sdk-swap-example.git
 cd raydium-sdk-swap-example
 yarn
 ```
