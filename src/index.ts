@@ -12,6 +12,7 @@ const swap = async () => {
    */
   const raydiumSwap = new RaydiumSwap(process.env.RPC_URL, process.env.WALLET_PRIVATE_KEY);
   console.log(`Raydium swap initialized`);
+  console.log(`Swapping ${swapConfig.tokenAAmount} of ${swapConfig.tokenAAddress} for ${swapConfig.tokenBAddress}...`)
 
   /**
    * Load pool keys from the Raydium API to enable finding pool information.
@@ -32,7 +33,7 @@ const swap = async () => {
     swapConfig.tokenBAddress,
     swapConfig.tokenAAmount,
     poolInfo,
-    swapConfig.maxLamports, // Max amount of lamports
+    swapConfig.maxLamports, 
     swapConfig.useVersionedTransaction,
     swapConfig.direction
   );
@@ -49,6 +50,7 @@ const swap = async () => {
       : await raydiumSwap.sendLegacyTransaction(tx as Transaction);
 
     console.log(`https://solscan.io/tx/${txid}`);
+
   } else {
     /**
      * Simulate the transaction and log the result.
