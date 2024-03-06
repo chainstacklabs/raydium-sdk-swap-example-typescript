@@ -1,6 +1,30 @@
+<img width="1200" alt="Labs" src="https://user-images.githubusercontent.com/99700157/213291931-5a822628-5b8a-4768-980d-65f324985d32.png">
+
+<p>
+ <h3 align="center">Chainstack is the leading suite of services connecting developers with Web3 infrastructure</h3>
+</p>
+
+<p align="center">
+  <a target="_blank" href="https://chainstack.com/build-better-with-ethereum/"><img src="https://github.com/soos3d/blockchain-badges/blob/main/protocols_badges/Ethereum.svg" /></a>&nbsp;  
+  <a target="_blank" href="https://chainstack.com/build-better-with-bnb-smart-chain/"><img src="https://github.com/soos3d/blockchain-badges/blob/main/protocols_badges/BNB.svg" /></a>&nbsp;
+  <a target="_blank" href="https://chainstack.com/build-better-with-polygon/"><img src="https://github.com/soos3d/blockchain-badges/blob/main/protocols_badges/Polygon.svg" /></a>&nbsp;
+  <a target="_blank" href="https://chainstack.com/build-better-with-avalanche/"><img src="https://github.com/soos3d/blockchain-badges/blob/main/protocols_badges/Avalanche.svg" /></a>&nbsp;
+  <a target="_blank" href="https://chainstack.com/build-better-with-solana/"><img src="https://github.com/soos3d/blockchain-badges/blob/main/protocols_badges/Solana.svg" /></a>&nbsp;
+</p>
+
+<p align="center">
+  <a target="_blank" href="https://chainstack.com/protocols/">Supported protocols</a> •
+  <a target="_blank" href="https://chainstack.com/blog/">Chainstack blog</a> •
+  <a target="_blank" href="https://docs.chainstack.com/quickstart/">Chainstack docs</a> •
+  <a target="_blank" href="https://docs.chainstack.com/quickstart/">Blockchain API reference</a> •
+  <a target="_blank" href="https://console.chainstack.com/user/account/create">Start for free</a>
+</p>
+
 # Raydium SDK Swap Example
 
-This project demonstrates how to perform a token swap on the Solana blockchain using Raydium's protocol. The example specifically illustrates swapping SOL (native Solana token) for USDC (a stablecoin).
+This project demonstrates how to perform a token swap on the Solana blockchain using Raydium and Chainstack. The example specifically illustrates swapping SOL (native Solana token) for USDC (a stablecoin).
+
+> Find the full guide on the Chainstack Developer Portal.
 
 ## Features
 
@@ -13,9 +37,18 @@ This project demonstrates how to perform a token swap on the Solana blockchain u
 
 Before you begin, ensure you have met the following requirements:
 
-- Node.js installed (v14 or above recommended)
+- Node.js installed (v18 or above recommended)
+- Yarn
 - A Solana wallet with some SOL for testing the swap
 - An environment file (.env) with your RPC URL and WALLET_PRIVATE_KEY
+
+## Chainstack Solana node
+
+Deploy a Solana node on Chainstack; the following steps will guide you:
+
+1. [Sign up with Chainstack](https://console.chainstack.com/user/account/create).
+2. [Deploy a node](https://docs.chainstack.com/docs/manage-your-networks#join-a-public-network).
+3. [View node access and credentials](https://docs.chainstack.com/docs/manage-your-node#view-node-access-and-credentials).
 
 ## Environment variables
 
