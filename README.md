@@ -24,7 +24,9 @@
 
 This project demonstrates how to perform a token swap on the Solana blockchain using Raydium and Chainstack. The example specifically illustrates swapping SOL (native Solana token) for USDC (a stablecoin).
 
-> Find the full guide on the Chainstack Developer Portal.
+Find the full [guide on the Chainstack Developer Portal](https://docs.chainstack.com/docs/solana-how-to-perform-token-swaps-using-the-raydium-sdk).
+
+> Shoutout to [precious-void](https://github.com/precious-void) for the the [base code](https://github.com/precious-void/raydium-swap) used for this project!
 
 ## Features
 
