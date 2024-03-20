@@ -1,5 +1,6 @@
 import RaydiumSwap from './RaydiumSwap';
 import { Transaction, VersionedTransaction } from '@solana/web3.js';
+import 'dotenv/config';
 import { swapConfig } from './swapConfig'; // Import the configuration
 
 /**
@@ -17,7 +18,7 @@ const swap = async () => {
   /**
    * Load pool keys from the Raydium API to enable finding pool information.
    */
-  await raydiumSwap.loadPoolKeys();
+  await raydiumSwap.loadPoolKeys(swapConfig.liquidityFile);
   console.log(`Loaded pool keys`);
 
   /**
@@ -46,8 +47,8 @@ const swap = async () => {
      * Send the transaction to the network and log the transaction ID.
      */
     const txid = swapConfig.useVersionedTransaction
-      ? await raydiumSwap.sendVersionedTransaction(tx as VersionedTransaction)
-      : await raydiumSwap.sendLegacyTransaction(tx as Transaction);
+      ? await raydiumSwap.sendVersionedTransaction(tx as VersionedTransaction, swapConfig.maxRetries)
+      : await raydiumSwap.sendLegacyTransaction(tx as Transaction, swapConfig.maxRetries);
 
     console.log(`https://solscan.io/tx/${txid}`);
 

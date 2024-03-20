@@ -11,10 +11,8 @@ import {
   Percent,
   SPL_ACCOUNT_LAYOUT,
 } from '@raydium-io/raydium-sdk'
-import { Wallet } from '@project-serum/anchor'
+import { Wallet } from '@coral-xyz/anchor'
 import bs58 from 'bs58'
-import 'dotenv/config';
-import { swapConfig } from './swapConfig'; // Import the configuration
 
 /**
  * Class representing a Raydium Swap operation.
@@ -30,9 +28,9 @@ class RaydiumSwap {
    * @param {string} WALLET_PRIVATE_KEY - The private key of the wallet in base58 format.
    */
   constructor(RPC_URL: string, WALLET_PRIVATE_KEY: string) {
-    this.connection = new Connection(process.env.RPC_URL
+    this.connection = new Connection(RPC_URL
       , { commitment: 'confirmed' })
-    this.wallet = new Wallet(Keypair.fromSecretKey(Uint8Array.from(bs58.decode(process.env.WALLET_PRIVATE_KEY))))
+    this.wallet = new Wallet(Keypair.fromSecretKey(Uint8Array.from(bs58.decode(WALLET_PRIVATE_KEY))))
   }
 
    /**
@@ -40,9 +38,9 @@ class RaydiumSwap {
    * @async
    * @returns {Promise<void>}
    */
-  async loadPoolKeys() {
-    const liquidityJsonResp = await fetch(swapConfig.liquidityFile);
-    if (!liquidityJsonResp.ok) return []
+  async loadPoolKeys(liquidityFile: string) {
+    const liquidityJsonResp = await fetch(liquidityFile);
+    if (!liquidityJsonResp.ok) return
     const liquidityJson = (await liquidityJsonResp.json()) as { official: any; unOfficial: any }
     const allPoolKeysJson = [...(liquidityJson?.official ?? []), ...(liquidityJson?.unOfficial ?? [])]
 
@@ -161,10 +159,10 @@ class RaydiumSwap {
    * @param {Transaction} tx - The transaction to send.
    * @returns {Promise<string>} The transaction ID.
    */
-  async sendLegacyTransaction(tx: Transaction) {
+  async sendLegacyTransaction(tx: Transaction, maxRetries?: number) {
     const txid = await this.connection.sendTransaction(tx, [this.wallet.payer], {
       skipPreflight: true,
-      maxRetries: swapConfig.maxRetries,
+      maxRetries: maxRetries,
     })
 
     return txid
@@ -176,10 +174,10 @@ class RaydiumSwap {
    * @param {VersionedTransaction} tx - The versioned transaction to send.
    * @returns {Promise<string>} The transaction ID.
    */
-  async sendVersionedTransaction(tx: VersionedTransaction) {
+  async sendVersionedTransaction(tx: VersionedTransaction, maxRetries?: number) {
     const txid = await this.connection.sendTransaction(tx, {
       skipPreflight: true,
-      maxRetries: swapConfig.maxRetries,
+      maxRetries: maxRetries,
     })
 
     return txid
