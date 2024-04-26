@@ -25,7 +25,12 @@ const swap = async () => {
    * Find pool information for the given token pair.
    */
   const poolInfo = raydiumSwap.findPoolInfoForTokens(swapConfig.tokenAAddress, swapConfig.tokenBAddress);
-  console.log('Found pool info');
+  if (!poolInfo) {
+    console.error('Pool info not found');
+    return 'Pool info not found';
+  } else {
+    console.log('Found pool info');
+  }
 
   /**
    * Prepare the swap transaction with the given parameters.
