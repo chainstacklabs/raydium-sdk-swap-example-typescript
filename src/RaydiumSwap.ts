@@ -13,6 +13,8 @@ import {
 } from '@raydium-io/raydium-sdk'
 import { Wallet } from '@coral-xyz/anchor'
 import bs58 from 'bs58'
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Class representing a Raydium Swap operation.
@@ -39,9 +41,14 @@ class RaydiumSwap {
    * @returns {Promise<void>}
    */
   async loadPoolKeys(liquidityFile: string) {
-    const liquidityJsonResp = await fetch(liquidityFile);
-    if (!liquidityJsonResp.ok) return
-    const liquidityJson = (await liquidityJsonResp.json()) as { official: any; unOfficial: any }
+    let liquidityJson;
+    if (liquidityFile.startsWith('http')) {
+      const liquidityJsonResp = await fetch(liquidityFile);
+      if (!liquidityJsonResp.ok) return;
+      liquidityJson = await liquidityJsonResp.json();
+    } else {
+      liquidityJson = JSON.parse(fs.readFileSync(path.join(__dirname, liquidityFile), 'utf-8'));
+    }
     const allPoolKeysJson = [...(liquidityJson?.official ?? []), ...(liquidityJson?.unOfficial ?? [])]
 
     this.allPoolKeysJson = allPoolKeysJson
