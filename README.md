@@ -19,7 +19,31 @@
   <a target="_blank" href="https://docs.chainstack.com/quickstart/">Blockchain API reference</a> •
   <a target="_blank" href="https://console.chainstack.com/user/account/create">Start for free</a>
 </p>
+# TLDR quick run
 
+Download the latest Raydium mainnet.json to the project root (it's a ~500 MB file):
+
+```
+wget https://api.raydium.io/v2/sdk/liquidity/mainnet.json
+```
+
+Set the tokenA and tokenB in `src/swapConfig.ts`.
+
+Now that you have the the 500 MB `mainnet.json` that has the entrirety of info on liquidity pairs, and you have the correct pairs set in `swapConfig.ts`, you want to trim the `mainnet.json` file to have only the necessary liquidity info pertaining to your tokenA & tokenB. So run:
+
+```
+ts-node src/trimMainnet.ts
+```
+
+This will produce `src/trimmed_mainnet.json` that takes less than a second to load vs minutes for `mainnet.json`.
+
+Make sure you have the Chainstack node & your private key set in `.env`. Make sure you have all dependencies installed with `yarn`.
+
+Run the swap:
+
+```
+yarn swap
+```
 # Raydium SDK Swap Example
 
 This project demonstrates how to perform a token swap on the Solana blockchain using Raydium and Chainstack. The example specifically illustrates swapping SOL (native Solana token) for USDC (a stablecoin).
