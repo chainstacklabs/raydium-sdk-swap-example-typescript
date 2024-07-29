@@ -33,8 +33,8 @@ function trimMainnetJson() {
     // Get the token addresses from swapConfig
     const { tokenAAddress, tokenBAddress } = swapConfig;
 
-    // Find the pool that matches the token pair
-    const relevantPool = mainnetData.official.find((pool: PoolInfo) => 
+    // Find the pool that matches the token pair in both official and unofficial pools
+    const relevantPool = [...mainnetData.official, ...(mainnetData.unOfficial || [])].find((pool: PoolInfo) => 
         (pool.baseMint === tokenAAddress && pool.quoteMint === tokenBAddress) ||
         (pool.baseMint === tokenBAddress && pool.quoteMint === tokenAAddress)
     );
