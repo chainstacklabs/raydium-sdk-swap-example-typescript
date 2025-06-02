@@ -253,9 +253,26 @@ class RaydiumSwap {
       currencyOutDecimals = poolInfo.baseDecimals
     }
 
-    const currencyIn = new Token(TOKEN_PROGRAM_ID, currencyInMint, currencyInDecimals)
+    // Getting the metadata of the tokens
+    const currencyInMeta = TOKEN_METADATA[currencyInMint.toString()] || { symbol: 'UNKNOWN', name: 'UNKNOWN' };
+    const currencyOutMeta = TOKEN_METADATA[currencyOutMint.toString()] || { symbol: 'UNKNOWN', name: 'UNKNOWN' };
+
+    // Creating Token objects with a symbol and a name
+    const currencyIn = new Token(
+      TOKEN_PROGRAM_ID,
+      currencyInMint,
+      currencyInDecimals,
+      currencyInMeta.symbol,
+      currencyInMeta.name
+    );
     const amountIn = new TokenAmount(currencyIn, rawAmountIn, false)
-    const currencyOut = new Token(TOKEN_PROGRAM_ID, currencyOutMint, currencyOutDecimals)
+    const currencyOut = new Token(
+      TOKEN_PROGRAM_ID,
+      currencyOutMint,
+      currencyOutDecimals,
+      currencyOutMeta.symbol,
+      currencyOutMeta.name
+    );
     const slippage = new Percent(5, 100) // 5% slippage
 
     const { amountOut, minAmountOut, currentPrice, executionPrice, priceImpact, fee } = Liquidity.computeAmountOut({
@@ -277,5 +294,12 @@ class RaydiumSwap {
     }
   }
 }
+
+// Mapping tokens by addresses
+const TOKEN_METADATA: Record<string, { symbol: string; name: string }> = {
+  'So11111111111111111111111111111111111111112': { symbol: 'SOL', name: 'Solana' },
+  'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v': { symbol: 'USDC', name: 'USD Coin' },
+  // Add other tokens if necessary. - mainnet.json
+};
 
 export default RaydiumSwap
