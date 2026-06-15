@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@coral-xyz/anchor": "^0.29.0",
-    "@raydium-io/raydium-sdk": "^1.3.1-beta.50",
+    "@raydium-io/raydium-sdk": "1.3.1-beta.50",
     "@solana/spl-token": "^0.4.1",
     "bs58": "^5.0.0",
     "dotenv": "^16.4.5",
