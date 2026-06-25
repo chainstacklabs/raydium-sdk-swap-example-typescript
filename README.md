@@ -12,23 +12,11 @@ Not everyone is a scammer though, sometimes there are helpful outside devs who c
 
 # TLDR quick run
 
-Download the latest Raydium mainnet.json to the project root (it's a ~500 MB file):
+This example uses the **Raydium SDK v2** (`@raydium-io/raydium-sdk-v2`). The v2 SDK fetches pool data from Raydium's API/RPC, so there's no more ~500 MB `mainnet.json` to download and trim.
 
-```
-wget https://api.raydium.io/v2/sdk/liquidity/mainnet.json
-```
-
-Set the tokenA and tokenB in `src/swapConfig.ts`.
-
-Now that you have the the 500 MB `mainnet.json` that has the entrirety of info on liquidity pairs, and you have the correct pairs set in `swapConfig.ts`, you want to trim the `mainnet.json` file to have only the necessary liquidity info pertaining to your tokenA & tokenB. So run:
-
-```
-ts-node src/trimMainnet.ts
-```
-
-This will produce `src/trimmed_mainnet.json` that takes less than a second to load vs minutes for `mainnet.json`.
-
-Make sure you have the Chainstack node & your private key set in `.env`. Make sure you have all dependencies installed with `yarn`.
+1. Install dependencies with `yarn`.
+2. Set your Chainstack node and private key in `.env` (`RPC_URL`, `WALLET_PRIVATE_KEY`).
+3. In `src/swapConfig.ts`, set the `poolId` (the Raydium AMM v4 pool, default SOL-USDC), the `inputMint` and amount, and `executeSwap` (`false` simulates, `true` sends).
 
 Run the swap:
 
@@ -45,10 +33,11 @@ Find the full [guide on the Chainstack Developer Portal](https://docs.chainstack
 
 ## Features
 
-- Utilizes the Raydium SDK for interacting with the Solana blockchain.
-- Supports both versioned and legacy transactions.
-- Allows simulation of swap transactions before execution.
-- Easy configuration for swap parameters through a dedicated config file.
+- Uses the [Raydium SDK v2](https://github.com/raydium-io/raydium-sdk-V2) (`@raydium-io/raydium-sdk-v2`) to swap on Raydium AMM pools.
+- Fetches pool data from Raydium's API/RPC — no large local pool file to download or trim.
+- Builds versioned (v0) transactions with a configurable priority fee.
+- Simulates the swap before execution.
+- Easy configuration through a dedicated config file.
 
 ## Prerequisites
 
@@ -81,31 +70,30 @@ WALLET_PRIVATE_KEY=YOUR_PRIVATE_KEY
 Clone the repository locally and install the dependencies:
 
 ```bash
-git clone https://github.com/soos3d/raydium-sdk-swap-example.git
-cd raydium-sdk-swap-example
+git clone https://github.com/chainstacklabs/raydium-sdk-swap-example-typescript.git
+cd raydium-sdk-swap-example-typescript
 yarn
 ```
 
 ## Usage
 
-Edit the configuration in `src/swapConfig.ts` editing:
+Edit the configuration in `src/swapConfig.ts`:
 
-- Select if you want to send the transaction or only simulate
-- The amount to swap
-- The tokens to swap
-- The liquidity file to pull the pool info from
+- `executeSwap` — `false` simulates the swap, `true` sends it
+- `poolId` — the Raydium AMM v4 pool to swap on (default: SOL-USDC). Find one on [raydium.io](https://raydium.io) or via `raydium.api.fetchPoolByMints`
+- `inputMint` + `tokenAAmount` — the token you swap from, and how much
+- `slippage` — slippage tolerance (`0.01` = 1%)
+- `computeUnitPriceMicroLamports` — priority fee, in micro-lamports per compute unit
 
 ```ts
 export const swapConfig = {
-  executeSwap: false, // Send tx when true, simulate tx when false
-  useVersionedTransaction: true,
-  tokenAAmount: 0.01, // Swap 0.01 SOL for USDT in this example
-  tokenAAddress: "So11111111111111111111111111111111111111112", // Token to swap for the other, SOL in this case
-  tokenBAddress: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // USDC address
-  maxLamports: 1000000, // Max lamports allowed for fees
-  direction: "in" as "in" | "out", // Swap direction: 'in' or 'out'
-  liquidityFile: "https://api.raydium.io/v2/sdk/liquidity/mainnet.json",
-  maxRetries: 10
+  executeSwap: false, // true = send the transaction, false = simulate it
+  poolId: "58oQChx4yWmvKdwLLZzBi4ChoCc2fqCUWBkwMihLYQo2", // SOL-USDC AMM v4 pool
+  inputMint: "So11111111111111111111111111111111111111112", // the token you swap from (SOL)
+  tokenAAmount: 0.001, // amount of inputMint to swap, in human units
+  slippage: 0.01, // 1%
+  computeUnitPriceMicroLamports: 100_000, // priority fee (micro-lamports per CU)
+  maxRetries: 20,
 };
 ```
 
