@@ -27,7 +27,7 @@ yarn swap
 
 This project demonstrates how to perform a token swap on the Solana blockchain using Raydium and Chainstack. The example specifically illustrates swapping SOL (native Solana token) for USDC (a stablecoin).
 
-Find the full [guide on the Chainstack Developer Portal](https://docs.chainstack.com/docs/solana-how-to-perform-token-swaps-using-the-raydium-sdk).
+Find the full [guide on the Chainstack Developer Portal](https://docs.chainstack.com/docs/solana-how-to-perform-token-swaps-using-the-raydium-sdk?utm_source=github&utm_medium=referral&utm_campaign=raydium-sdk-swap-example-typescript).
 
 > Shoutout to [precious-void](https://github.com/precious-void) for the the [base code](https://github.com/precious-void/raydium-swap) used for this project!
 
@@ -52,9 +52,9 @@ Before you begin, ensure you have met the following requirements:
 
 Deploy a Solana node on Chainstack; the following steps will guide you:
 
-1. [Sign up with Chainstack](https://console.chainstack.com/user/account/create).
-2. [Deploy a node](https://docs.chainstack.com/docs/manage-your-networks#join-a-public-network).
-3. [View node access and credentials](https://docs.chainstack.com/docs/manage-your-node#view-node-access-and-credentials).
+1. [Sign up with Chainstack](https://console.chainstack.com/sign-up?utm_source=github&utm_medium=referral&utm_campaign=raydium-sdk-swap-example-typescript).
+2. [Deploy a node](https://docs.chainstack.com/docs/manage-your-networks?utm_source=github&utm_medium=referral&utm_campaign=raydium-sdk-swap-example-typescript#join-a-public-network).
+3. [View node access and credentials](https://docs.chainstack.com/docs/manage-your-node?utm_source=github&utm_medium=referral&utm_campaign=raydium-sdk-swap-example-typescript#view-node-access-and-credentials).
 
 ## Environment variables
 
